@@ -11,15 +11,14 @@
     <table>
         <tr>
             <th> dir </th>
-            <tr>
-                <a href="#">{{ date }}</a>
-            </tr>
+            <th> {{date}}</th>
 
         </tr>
-        {% for dir in dirs %}
+        {% for file in files %}
         <tr>
             <td>
-                <a href="/dir/{{ dir }}">{{ dir }}</a>
+<!--                 Скачиваем файл-->
+                <a href="/dir/{date}/{files}">{{ file }}</a>
             </td>
         </tr>
         {% endfor %}

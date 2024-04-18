@@ -7,39 +7,54 @@ class get_data_class:
         self.attribute_value = attribute_value
 
     def connect_method(self):
-        r = requests.get(self.attribute_value)
+        self.r = requests.get(self.attribute_value)
 
-        r2 = str(r)
+        r2 = str(self.r)
 
         if r2 == '<Response [200]>':
             atr_conection = 'connect OK!!!!!'
 
         return atr_conection
 
-# html = BS(r.content, 'html.parser')
-# listDir = []
-# listSec = []
-#
-# allDir = html.findAll('a')  # soup.findAll('a', class_='lenta')
-#
-# for data in allDir:
-#     listDir.append(data.text)
-#
-# dir = listDir[len(listDir) - 1]
-#
-# r_dir = requests.get(f'http://erinrv.qscalp.ru/{dir}/')
-# html = BS(r_dir.content, 'html.parser')
-# allSec = html.findAll('a')
-#
-# for data in allSec:
-#     listSec.append(data.text)
-#
-# for link in html.find_all('a'):
-#     if link.get('href') != '/':
-#         print(link.get('href'))
+    def get_dir(self):
+        html = BS(self.r.content, 'html.parser')
+        self.listDir = []
 
-# Скачиваем файл
-# file1 = requests.get('http://erinrv.qscalp.ru/2024-04-16/VTBR.2024-04-16.Deals.qsh')
+        allDir = html.findAll('a')  # soup.findAll('a', class_='lenta')
 
-# with open('Test_QSH/VTBR.2024-04-16.Deals.qsh', 'wb') as file:
-#     file.write(file1.content)
+        for data in allDir:
+            self.listDir.append(data.text)
+
+        return self.listDir
+
+    def get_list_files(self,dir):
+        self.listSec = []
+
+        listDir = get_data_class.get_dir(self)
+
+        # dir ='2024-04-15'
+        # dir = listDir[len(listDir) - 1]
+
+        r_dir = requests.get(f'http://erinrv.qscalp.ru/{dir}/')
+        html = BS(r_dir.content, 'html.parser')
+        allSec = html.findAll('a')
+
+        for data in allSec:
+            if data.get('href') != '/':
+                self.listSec.append(data.text)
+
+        # for link in html.find_all('a'):
+        #     if link.get('href') != '/':
+        #         print(link.get('href'))
+
+        return self.listSec
+
+    def download_file(self, r_dir):
+
+        # Скачиваем файл
+        # file1 = requests.get('http://erinrv.qscalp.ru/2024-04-16/VTBR.2024-04-16.Deals.qsh')
+        file1 = requests.get(r_dir)
+
+        # with open('Test_QSH/VTBR.2024-04-16.Deals.qsh', 'wb') as file:
+        #     file.write(file1.content)
+        return file1.content
