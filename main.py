@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Request, UploadFile
+from starlette.responses import FileResponse
+
 from pages.router import router as router_page
 from fastapi.templating import Jinja2Templates
 from data import get_data as gd
@@ -38,7 +40,7 @@ async def say_hello(request: Request):
 
 
 @app.get("/dir/{date}")
-async def say_hello(request: Request, date: str):
+async def list_files(request: Request, date: str):
     url = "http://erinrv.qscalp.ru/"
     test = gd.get_data_class(url)
     a = test.connect_method()
@@ -51,11 +53,16 @@ async def say_hello(request: Request, date: str):
 
 
 @app.get("/dir/{date}/{files}")
-async def say_hello(request: Request, date: str, file: UploadFile):
-    url = "http://erinrv.qscalp.ru/"
-    test = gd.get_data_class(url)
-    a = test.connect_method()
-    dirs = test.get_dir()
-    r_dir = f'{url}/{date}/{file}'
-    file = test.download_file(r_dir)
-    return {'filename': file.filename, 'file': file, 'dirs': dirs, 'url': url}
+async def download_file(request: Request, date: str, files: str):
+    # async def download_file(request: Request, date: str, files: str):
+    return FileResponse(path="http://erinrv.qscalp.ru/{date}/{files}".format(date=date, files=files))
+
+# http://erinrv.qscalp.ru/2024-04-16/VTBR.2024-04-16.Deals.qsh
+# async def say_hello(request: Request, date: str, file: UploadFile):
+#     url = "http://erinrv.qscalp.ru/"
+#     test = gd.get_data_class(url)
+#     a = test.connect_method()
+#     dirs = test.get_dir()
+#     r_dir = f'{url}/{date}/{file}'
+#     file = test.download_file(r_dir)
+#     return {'filename': file.filename, 'file': file, 'dirs': dirs, 'url': url}
