@@ -18,7 +18,8 @@
         <tr>
             <td>
 <!--                 Скачиваем файл-->
-                <a href="/dir/{date}/{files}">{{ file }}</a>
+                <a href="/dir/{{ date }}/{{ file }}" >{{ file }}</a>
+<!--                <a href="#" target="_blank" download>{{ file }}</a>-->
             </td>
         </tr>
         {% endfor %}

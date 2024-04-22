@@ -27,7 +27,7 @@ class get_data_class:
 
         return self.listDir
 
-    def get_list_files(self,dir):
+    def get_list_files(self, dir):
         self.listSec = []
 
         listDir = get_data_class.get_dir(self)
@@ -53,8 +53,8 @@ class get_data_class:
 
         # Скачиваем файл
         # file1 = requests.get('http://erinrv.qscalp.ru/2024-04-16/VTBR.2024-04-16.Deals.qsh')
-        file1 = requests.get(r_dir)
+        self.file1 = requests.get(r_dir)
 
         # with open('Test_QSH/VTBR.2024-04-16.Deals.qsh', 'wb') as file:
         #     file.write(file1.content)
-        return file1.content
+        return self.file1.content

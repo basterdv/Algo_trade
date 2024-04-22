@@ -18,3 +18,5 @@ files = test.get_list_files(dir)
 
 r_dir = 'http://erinrv.qscalp.ru/2024-04-16/VTBR.2024-04-16.Deals.qsh'
 download_file = test.download_file(r_dir)
+with open('C:/Users/Home/Downloads/VTBR.2024-04-16.Deals.qsh', 'wb') as file:
+    file.write(download_file)
